@@ -1,24 +1,18 @@
 const express = require('express');
 const app = express();
-// const port = 8080;
-const port = 3003;
+const { port } = require('../config')
+const book = require('./models/book')
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-app.get('/', (req: any, res: any) => {
-    interface tmp {
-        name:string,
-        number:number
+app.get('/', async (req: any, res: any) => {
+    interface Book {
+        id: number,
+        title: string,
+        author: string,
+        description: string,
     }
-
-    let myObj = {number: 10, name: "name"};
-
-    const func = (obj: tmp):string => {
-        return obj.name
-    }
-
-    const a = func(myObj)
-    console.log(a)
-
-    res.json(myObj)
+    
+    const books:Book[] = await book.getBooks();
+    res.json(books)
 })
