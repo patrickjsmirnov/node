@@ -18,3 +18,14 @@ exports.getBooks = async function () {
       return e;
     }
 };
+
+// getting book
+exports.getBook = async function (id) {
+    const query:String = `SELECT * FROM books WHERE id=${id}`;
+    try {
+      const { rows } = await pool.query(query);
+      return rows
+    } catch (e) {
+      return e;
+    }
+};

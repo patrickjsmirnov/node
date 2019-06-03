@@ -1,3 +1,3 @@
-const port = 3003
+const port:number = 3003
 
 module.exports.port = port;

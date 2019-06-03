@@ -1,18 +1,9 @@
 const express = require('express');
 const app = express();
-const { port } = require('../config')
-const book = require('./models/book')
+const router = express.Router()
+const bookRouter = require('./controllers/book')
 
+const port:number = 3003 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-app.get('/', async (req: any, res: any) => {
-    interface Book {
-        id: number,
-        title: string,
-        author: string,
-        description: string,
-    }
-    
-    const books:Book[] = await book.getBooks();
-    res.json(books)
-})
+app.use('/books', bookRouter)
