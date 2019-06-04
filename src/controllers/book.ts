@@ -7,12 +7,20 @@ const book = require('../models/book')
 interface Book {
     id: number,
     title: string,
-    author: string,
+    author: number,
     description: string,
 }
 
 router.get('/', async (req: any, res: any) => {
-    const books:Book[] = await book.getBooks();
+    const { author_id } = req.query
+    let books:Book[]
+
+    if (author_id) {
+        books = await book.getBooksByAuthorId(author_id);
+    } else {
+        books = await book.getBooks();
+    }
+    
     res.json(books)
 })
 

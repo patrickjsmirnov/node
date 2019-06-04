@@ -20,8 +20,20 @@ exports.getBooks = async function () {
 };
 
 // getting book
-exports.getBook = async function (id) {
+exports.getBook = async function (id:number) {
     const query:String = `SELECT * FROM books WHERE id=${id}`;
+    try {
+      const { rows } = await pool.query(query);
+      return rows
+    } catch (e) {
+      return e;
+    }
+};
+
+// getting books
+exports.getBooksByAuthorId = async function (authorId:number) {
+    const query:String = `SELECT * FROM books where author=${authorId}`;
+
     try {
       const { rows } = await pool.query(query);
       return rows
