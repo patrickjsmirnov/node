@@ -7,7 +7,7 @@ const authorRouter = require('./controllers/author')
 
 const port:number = 3003
 
-// parse application/json
+app.use(express.static('public'));
 app.use(bodyParser.json())
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

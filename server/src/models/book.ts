@@ -3,7 +3,7 @@ const { pool }= require('../db')
 interface Book {
     id: number,
     title: string,
-    author: string,
+    author_id: number,
     description: string,
 }
 
@@ -32,7 +32,7 @@ exports.getBook = async function (id:number) {
 
 // getting books
 exports.getBooksByAuthorId = async function (authorId:number) {
-    const query:String = `SELECT * FROM books where author=${authorId}`;
+    const query:String = `SELECT * FROM books where author_id=${authorId}`;
 
     try {
       const { rows } = await pool.query(query);
