@@ -12,8 +12,8 @@ interface Book {
 }
 
 router.get('/', async (req: any, res: any) => {
-    const { author_id: authorId, limit } = req.query
-    const books:Book[] = await book.getBooks({authorId, limit});
+    const { author_id: authorId, limit, sort_by: sortBy } = req.query
+    const books:Book[] = await book.getBooks({authorId, limit, sortBy});
     
     res.json(books)
 })

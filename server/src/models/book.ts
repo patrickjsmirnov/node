@@ -7,14 +7,21 @@ interface Book {
     description: string,
 }
 
+const sortByKeys:string[] = ['id', 'title', 'author_id', 'description'] 
+const allowedKeysForSorting = new Set(sortByKeys)
+
 // getting books
-exports.getBooks = async function ({limit = 100, authorId}) {
+exports.getBooks = async function ({limit = 100, authorId, sortBy = 'title'}) {
     let query: string = ''
 
+    if (!allowedKeysForSorting.has(sortBy)) {
+      sortBy = 'title'
+    }
+
     if (authorId) {
-      query = `SELECT * FROM books where author_id=${authorId} LIMIT ${limit}`;
+      query = `SELECT * FROM books where author_id=${authorId} ORDER BY ${sortBy} LIMIT ${limit}`;
     } else {
-      query = `SELECT * FROM books LIMIT ${limit}`;  
+      query = `SELECT * FROM books ORDER BY ${sortBy} LIMIT ${limit}`;  
     }
 
     try {
