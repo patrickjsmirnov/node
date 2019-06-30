@@ -1,2 +1,2 @@
 Just for fun
-node, docker, typescript, etc
+node, docker, typescript, react

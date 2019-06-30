@@ -1,6 +1,8 @@
-function component() {
-    console.log('1111');
-}
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import App from './App';
 
-component();
-  
+ReactDOM.render(
+    <App test="test"/>,
+    document.getElementById('app')
+);
