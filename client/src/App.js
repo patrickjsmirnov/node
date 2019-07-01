@@ -1,12 +1,16 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Login from './components/Login'
+import Signin from './components/Signin'
 
 class App extends Component {
   render() {
-
-    console.log('111');
-    var b = 1111
     return (
-      <div>react app yeah!!</div>
+      <Router>
+        <Route path="/login" component={Login} />
+        <Route path="/signin" component={Signin} />
+      </Router>
     );
   }
 }
