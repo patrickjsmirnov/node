@@ -1,15 +1,19 @@
 const express = require('express');
 const app = express();
-const router = express.Router()
+const router = express.Router();
 const path = require('path');
-const bodyParser = require('body-parser')
-const bookRouter = require('./controllers/book')
-const authorRouter = require('./controllers/author')
+const cors = require('cors');
+const mongoose = require('mongoose');
 
-const port:number = 3003
+const bodyParser = require('body-parser');
+const bookRouter = require('./controllers/book');
+const authorRouter = require('./controllers/author');
+
+const port:number = 3003;
 
 app.use(express.static('public'));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cors());
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
