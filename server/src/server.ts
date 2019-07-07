@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bookRouter = require('./components/books/booksController');
 const authorRouter = require('./components/authors/authorsController');
+const usersRouter = require('./components/users/usersController');
+
 
 const port:number = 3003;
 
@@ -19,6 +21,7 @@ app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 app.use('/books', bookRouter)
 app.use('/authors', authorRouter)
+app.use('/users', usersRouter)
 
 app.get('*', (req, res) => {
     res.sendFile('index.html', {root: path.join(__dirname, '../../public/')});
