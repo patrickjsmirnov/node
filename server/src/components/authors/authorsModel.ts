@@ -1,6 +1,6 @@
 export{}
 
-const { pool }= require('../db')
+const { pool }= require('../../db')
 
 interface Author {
     id: number,

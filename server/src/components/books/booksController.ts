@@ -2,7 +2,7 @@ export{}
 
 const express = require('express')
 const router = express.Router()
-const book = require('../models/book')
+const book = require('./booksModel')
 
 interface Book {
     id: number,

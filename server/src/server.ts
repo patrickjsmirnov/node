@@ -6,8 +6,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
-const bookRouter = require('./controllers/book');
-const authorRouter = require('./controllers/author');
+const bookRouter = require('./components/books/booksController');
+const authorRouter = require('./components/authors/authorsController');
 
 const port:number = 3003;
 

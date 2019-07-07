@@ -2,7 +2,7 @@ export{}
 
 const express = require('express')
 const router = express.Router()
-const author = require('../models/author')
+const author = require('./authorsModel')
 
 interface Author {
     id: number,
