@@ -1,41 +1,53 @@
 export {}
 
 const mongoose = require('mongoose');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-mongoose.connect('mongodb://127.0.0.1:27017');
+// mongoose.connect('mongodb://127.0.0.1:27017');
     
-const mongoDb = mongoose.connection;
-mongoDb.on('error', console.error.bind(console, 'connection error:'));
-mongoDb.once('open', () => console.log('connected to mongoDb'));
+// const mongoDb = mongoose.connection;
+// mongoDb.on('error', console.error.bind(console, 'connection error:'));
+// mongoDb.once('open', () => console.log('connected to mongoDb'));
     
 // schema
 const { Schema } = mongoose;
+
 const UsersSchema = new Schema({
-    name: String,
     email: String,
     hash: String,
     salt: String,
 });
 
-// model
-var User = mongoose.model('User', UsersSchema);
+UsersSchema.methods.setPassword = function(password) {
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+};
 
-// methods
-const createUser = ({ name, email }) => {
-    const user = new User({
-        name,
-        email,
-        hash: 'test',
-        salt: 'test'
-    });
+UsersSchema.methods.validatePassword = function(password) {
+    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 
-    user.save((err, user) => {
-        if (err) return console.error(err);
-    })
-}
+    return this.hash === hash;
+};
 
-const usersModel = {
-    createUser
-}
+UsersSchema.methods.generateJWT = function() {
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 60);
+  
+    return jwt.sign({
+      email: this.email,
+      id: this._id,
+      exp: parseInt(String(expirationDate.getTime() / 1000), 10),
+    }, 'secret');
+  }
+  
+UsersSchema.methods.toAuthJSON = function() {
+    return {
+      _id: this._id,
+      email: this.email,
+      token: this.generateJWT(),
+    };
+};
 
-module.exports = usersModel
+mongoose.model('Users', UsersSchema);
